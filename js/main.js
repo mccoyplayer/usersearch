@@ -1,4 +1,7 @@
-$(document).ready(function () {
+/*jslint browser : true */
+/*global $, jQuery */
+
+$(window).on('load', function () {
    'use strict';
 
    /*
@@ -15,16 +18,22 @@ $(document).ready(function () {
             timeout = timeout || 1e3;
             var timeoutReference,
                doneTyping = function (el) {
-                  if (!timeoutReference) return;
+                  if (!timeoutReference) {
+                     return;
+                  }
                   timeoutReference = null;
                   callback.call(el);
                };
             return this.each(function (i, el) {
                var $el = $(el);
                $el.is(':input') && $el.on('keyup keypress paste', function (e) {
-                  if (e.type === 'keyup' && e.keyCode !== 8) return;
+                  if (e.type === 'keyup' && e.keyCode !== 8) {
+                     return;
+                  }
 
-                  if (timeoutReference) clearTimeout(timeoutReference);
+                  if (timeoutReference) {
+                     clearTimeout(timeoutReference);
+                  }
                   timeoutReference = setTimeout(function () {
                      doneTyping(el);
                   }, timeout);
@@ -80,11 +89,11 @@ $(document).ready(function () {
                location = 'Not specified';
             }
 
-            $('#result').html(`
-               <div class="card">
+            $('#result').html(
+               `<div class="card">
                  <div class="card-body">
                      <div class="row">
-                        <div class="col-sm-12 col-lg-8 col-md-8">
+                        <div class="col-lg-8 col-md-8 order-2 order-sm-1">
                            <h4 class="card-title">` + displayName + `</h4>
                            <p class="card-text">Bio : ` + bio + `</p>
                            <p class="card-text">Lives in : ` + location + `</p>
@@ -103,13 +112,13 @@ $(document).ready(function () {
                               <button class="btn btn-primary" onclick="location.href='` + html_url +  `';">View profile of ` + displayName + `</button>
                            </div>
                         </div>
-                        <div class="col-sm-12 col-lg-4 col-md-4">
+                        <div class="col-lg-4 col-md-4 order-1 order-sm-2">
                            <img class="img-fluid" src=` + profilepic + ` />
                         </div>
                      </div>
                   </div>
-               </div>
-            `);
+               </div>`
+            );
 
          },
          statusCode: {
